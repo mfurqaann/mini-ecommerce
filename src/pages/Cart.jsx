@@ -1,8 +1,31 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { actionsCart } from "../store/cartSlice";
 
 function Cart() {
   const cartItems = useSelector((state) => state.cart.items);
+  const [quantity, setQuantity] = useState(1);
+
+  const dispatch = useDispatch();
+
+  function handleAddQuantity(product) {
+    const payload = {
+      id: product.id,
+      price: product.price / product.quantity,
+      quantity: quantity,
+    };
+    dispatch(actionsCart.incrementItemCart(payload));
+    setQuantity((prev) => prev + 1);
+  }
+
+  function handleDecreaseQuantity(product) {
+    const payload = {
+      price: product.price / product.quantity,
+      id: product.id,
+      quantity,
+    };
+    dispatch(actionsCart.decrementItemCart(payload));
+  }
 
   return (
     <div className="container mx-auto px-6 py-10">
@@ -12,7 +35,10 @@ function Cart() {
         <div className="md:col-span-2 space-y-6">
           {cartItems &&
             cartItems.map((item) => (
-              <div className="flex items-center justify-between border rounded-lg p-4">
+              <div
+                key={item.id}
+                className="flex items-center justify-between border rounded-lg p-4"
+              >
                 <div className="flex items-center gap-4">
                   <img
                     src={item.image}
@@ -26,9 +52,22 @@ function Cart() {
                     </p>
                   </div>
                 </div>
-                <button className="text-blue-600 hover:underline">
-                  Remove
-                </button>
+
+                <div className="flex items-center gap-4 mb-6">
+                  <button
+                    onClick={() => handleDecreaseQuantity(item)}
+                    className="px-3 py-1 border cursor-pointer rounded-md text-gray-700 hover:bg-gray-100"
+                  >
+                    -
+                  </button>
+                  <span className="px-4">{item.quantity}</span>
+                  <button
+                    onClick={() => handleAddQuantity(item)}
+                    className="px-3 py-1 border cursor-pointer rounded-md text-gray-700 hover:bg-gray-100"
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             ))}
         </div>
