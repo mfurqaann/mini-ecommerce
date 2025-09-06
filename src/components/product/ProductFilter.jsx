@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { memo } from "react";
 
 const items = [
   {
@@ -103,4 +104,4 @@ function ProductFilter({
   );
 }
 
-export default ProductFilter;
+export default memo(ProductFilter);

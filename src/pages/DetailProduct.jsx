@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
+import { actionsCart } from "../store/cartSlice";
 
 function DetailProduct() {
   const [product, setProduct] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function getProductById(id) {
@@ -31,6 +35,17 @@ function DetailProduct() {
     getProductById(id);
   }, []);
 
+  function handleAddToCart() {
+    const payload = {
+      id: product.id,
+      image: product.image,
+      name: product.name,
+      price: product.price,
+      quantity: quantity,
+    };
+    dispatch(actionsCart.addItemToCart(payload));
+  }
+
   return (
     <div className="container mx-auto px-6 py-12">
       {product && (
@@ -56,16 +71,27 @@ function DetailProduct() {
             </p>
 
             <div className="flex items-center gap-4 mb-6">
-              <button className="px-3 py-1 border rounded-md text-gray-700 hover:bg-gray-100">
+              <button
+                onClick={() =>
+                  setQuantity((prev) => (prev === 1 ? prev : prev - 1))
+                }
+                className="px-3 py-1 border cursor-pointer rounded-md text-gray-700 hover:bg-gray-100"
+              >
                 -
               </button>
-              <span className="px-4">1</span>
-              <button className="px-3 py-1 border rounded-md text-gray-700 hover:bg-gray-100">
+              <span className="px-4">{quantity}</span>
+              <button
+                onClick={() => setQuantity((prev) => prev + 1)}
+                className="px-3 py-1 border cursor-pointer rounded-md text-gray-700 hover:bg-gray-100"
+              >
                 +
               </button>
             </div>
 
-            <button className="w-full md:w-[150px] bg-orange-600 text-white py-3 rounded-lg font-medium hover:bg-orange-700 transition">
+            <button
+              onClick={handleAddToCart}
+              className="w-full md:w-[150px] bg-orange-600 cursor-pointer text-white py-3 rounded-lg font-medium hover:bg-orange-700 transition"
+            >
               Add to Cart
             </button>
 

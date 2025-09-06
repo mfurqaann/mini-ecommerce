@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ProductFilter from "../components/product/ProductFilter";
 import ProductList from "../components/product/ProductList";
 
@@ -47,60 +47,62 @@ function Home() {
     };
   }, [rangePrice]);
 
-  function handleCheckBoxFilter(field) {
+  const handleCheckBoxFilter = useCallback((field) => {
     setCategoriesFilter((prev) =>
       prev.includes(field)
         ? prev.filter((cat) => cat !== field)
         : [...prev, field]
     );
-  }
+  }, []);
 
-  function handleSlider(val) {
+  const handleSlider = useCallback((val) => {
     setRangePrice(+val);
-  }
+  }, []);
 
-  function handleSort(sortValue) {
+  const handleSort = useCallback((sortValue) => {
     setSortedBy(sortValue);
-  }
+  }, []);
 
-  function handleOrder(orderValue) {
-    console.log(orderValue);
+  const handleOrder = useCallback((orderValue) => {
     setOrderBy(orderValue);
-  }
+  }, []);
 
-  const filteredData = products
-    .filter((product) => {
-      const matchCategories =
-        categoriesFilter.length === 0 ||
-        categoriesFilter.includes(product.category);
+  const filteredData = useMemo(() => {
+    return products
+      .filter((product) => {
+        const matchCategories =
+          categoriesFilter.length === 0 ||
+          categoriesFilter.includes(product.category);
 
-      const matchPrice =
-        debouncePrice > 0 ? product.price <= debouncePrice : true;
+        const matchPrice =
+          debouncePrice > 0 ? product.price <= debouncePrice : true;
 
-      return matchCategories && matchPrice;
-    })
-    .toSorted((a, b) => {
-      switch (sortedBy) {
-        case "name":
-          if (orderBy === "asc") {
-            return a.name.localeCompare(b.name);
-          }
-          return b.name.localeCompare(a.name);
-        case "price":
-          if (orderBy === "asc") {
-            return a.price - b.price;
-          }
-          return b.price - a.price;
-        case "rate":
-          if (orderBy === "asc") {
-            return a.rate - b.rate;
-          }
-          return b.rate - a.rate;
-      }
-    });
+        return matchCategories && matchPrice;
+      })
+      .toSorted((a, b) => {
+        switch (sortedBy) {
+          case "name":
+            if (orderBy === "asc") {
+              return a.name.localeCompare(b.name);
+            }
+            return b.name.localeCompare(a.name);
+          case "price":
+            if (orderBy === "asc") {
+              return a.price - b.price;
+            }
+            return b.price - a.price;
+          case "rate":
+            if (orderBy === "asc") {
+              return a.rate - b.rate;
+            }
+            return b.rate - a.rate;
+        }
+      });
+  }, [products, categoriesFilter, debouncePrice, sortedBy, orderBy]);
 
-  const maxPrice = Math.max(...products.map((product) => product.price));
-
+  const maxPrice = useMemo(() => {
+    return Math.max(...products.map((product) => product.price));
+  }, [products]);
   return (
     <>
       <h1 className="text-3xl text-center mt-8 font-bold">Product List</h1>
