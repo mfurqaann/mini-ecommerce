@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { memo } from "react";
+import { formatRupiah } from "../../utils/FormatRupiah";
 
 const items = [
   {
@@ -59,7 +60,7 @@ function ProductFilter({
 
       <div className="mt-5">
         <div className="font-bold">Maximal Price</div>
-        <div>Rp {rangePrice.toLocaleString("id-ID")}</div>
+        <div>{formatRupiah(rangePrice)}</div>
         <div className="px-3 mt-3">
           <Slider
             max={maxPrice}

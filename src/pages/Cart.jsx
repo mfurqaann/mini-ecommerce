@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionsCart } from "../store/cartSlice";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
+import { formatRupiah } from "../utils/FormatRupiah";
+import PrimaryButton from "../components/layout/PrimaryButton";
 
 function Cart() {
   const cartItems = useSelector((state) => state.cart.items);
+  const subTotal = useSelector((state) => state.cart.totalPrice);
   const [quantity, setQuantity] = useState(1);
 
   const dispatch = useDispatch();
@@ -47,9 +52,7 @@ function Cart() {
                   />
                   <div>
                     <h2 className="font-semibold text-lg">{item.name}</h2>
-                    <p className="font-bold mt-2">
-                      Rp {item.price.toLocaleString("id-ID")}
-                    </p>
+                    <p className="font-bold mt-2">{formatRupiah(item.price)}</p>
                   </div>
                 </div>
 
@@ -76,11 +79,11 @@ function Cart() {
           <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
           <div className="flex justify-between mb-6">
             <span className="text-gray-700 font-medium">Subtotal</span>
-            <span className="font-bold">$145.00</span>
+            <span className="font-bold">{formatRupiah(subTotal)}</span>
           </div>
-          <button className="w-full bg-black text-white py-3 rounded-lg bg-orange-600 hover:bg-orange-700">
-            Checkout
-          </button>
+          <Link to="/checkout">
+            <PrimaryButton className="w-full py-3">Checkout</PrimaryButton>
+          </Link>
         </div>
       </div>
     </div>

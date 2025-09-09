@@ -8,6 +8,7 @@ import Home from "./pages/Home.jsx";
 import Navbar from "./components/layout/Navbar.jsx";
 import store from "./store/index.js";
 import Cart from "./pages/Cart.jsx";
+import Checkout from "./pages/Checkout.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -17,6 +18,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/" element={<Home />} />
         <Route path="/:id" element={<DetailProduct />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </BrowserRouter>
   </Provider>

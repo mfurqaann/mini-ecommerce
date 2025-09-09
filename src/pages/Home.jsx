@@ -31,7 +31,7 @@ function Home() {
 
         setProducts(newData);
       } catch (error) {
-        console.log(error.message);
+        console.error(error.message);
       }
     }
     fetchProducts();

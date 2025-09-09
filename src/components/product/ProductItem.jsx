@@ -1,8 +1,10 @@
 import { Star } from "lucide-react";
-import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router";
 import { actionsCart } from "../../store/cartSlice";
+import { Button } from "@/components/ui/button";
+import { formatRupiah } from "../../utils/FormatRupiah";
+import PrimaryButton from "../layout/PrimaryButton";
 
 function ProductItem({ product }) {
   const dispatch = useDispatch();
@@ -28,16 +30,14 @@ function ProductItem({ product }) {
       </Link>
       <div className="p-4 flex flex-col flex-1">
         <h3 className="truncate text-lg font-semibold">{product.name}</h3>
-        <p className="text-gray-500">
-          Rp {product.price.toLocaleString("id-ID")}
-        </p>
+        <p className="text-gray-500">{formatRupiah(product.price)}</p>
 
-        <button
+        <PrimaryButton
           onClick={() => handleAddItemToCart(product)}
-          className="mt-3 w-[120px] bg-orange-600 text-white py-2 rounded-md hover:bg-orange-700 transition cursor-pointer"
+          className="mt-3 w-[120px] py-2 hover:bg-orange-700 transition"
         >
-          Add to Cart
-        </button>
+          Add to cart
+        </PrimaryButton>
 
         <div className="flex items-center mt-2">
           {[...Array(5)].map((_, i) => (

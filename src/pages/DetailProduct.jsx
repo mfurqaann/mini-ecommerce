@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { actionsCart } from "../store/cartSlice";
+import { formatRupiah } from "../utils/FormatRupiah";
+import PrimaryButton from "../components/layout/PrimaryButton";
 
 function DetailProduct() {
   const [product, setProduct] = useState(null);
@@ -63,7 +65,7 @@ function DetailProduct() {
               {product.name}
             </h1>
             <p className="text-xl text-blue-600 font-semibold mb-4">
-              Rp {product.price.toLocaleString("id-ID")}
+              {formatRupiah(product.price)}
             </p>
 
             <p className="text-gray-600 mb-6 leading-relaxed">
@@ -88,12 +90,12 @@ function DetailProduct() {
               </button>
             </div>
 
-            <button
+            <PrimaryButton
               onClick={handleAddToCart}
-              className="w-full md:w-[150px] bg-orange-600 cursor-pointer text-white py-3 rounded-lg font-medium hover:bg-orange-700 transition"
+              className="w-full md:w-[150px] py-3 font-medium transition"
             >
               Add to Cart
-            </button>
+            </PrimaryButton>
 
             <div className="mt-6 text-sm text-gray-500">
               <p>Material: 100% Cotton</p>
