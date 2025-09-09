@@ -48,9 +48,6 @@ src/
 
 ## Getting Started
 
-### 1. Clone the Repository
-## 🚀 Cara Menjalankan
-
 1. **Clone the repository**
    ```bash
    git clone https://github.com/mfurqaann/mini-ecommerce.git
