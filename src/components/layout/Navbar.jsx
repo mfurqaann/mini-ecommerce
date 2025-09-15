@@ -8,7 +8,7 @@ function Navbar() {
   return (
     <nav className="w-full bg-white shadow-md">
       <div className="container mx-auto px-6 py-3 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold text-gray-800">
+        <Link to="/" className="text-2xl font-bold text-orange-600">
           ShopNow
         </Link>
 
@@ -28,9 +28,12 @@ function Navbar() {
         </div>
         <div>
           <Link to="/cart">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ShoppingCart size={20} />
-              <span>Cart ({cartQuantity})</span>
+            <Button
+              variant="outline"
+              className="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 cursor-pointer"
+            >
+              <ShoppingCart size={20} className="text-white" />
+              <span className="text-white">Cart ({cartQuantity})</span>
             </Button>
           </Link>
         </div>

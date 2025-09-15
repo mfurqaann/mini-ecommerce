@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ProductFilter from "../components/product/ProductFilter";
 import ProductList from "../components/product/ProductList";
+import HeroSection from "../components/layout/HeroSection";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -105,7 +106,8 @@ function Home() {
   }, [products]);
   return (
     <>
-      <h1 className="text-3xl text-center mt-8 font-bold">Product List</h1>
+      <HeroSection />
+      {/* <h1 className="text-3xl text-center mt-8 font-bold">Product List</h1> */}
       <div className="w-full">
         <div className="container grid grid-cols-1 md:grid-cols-4 gap-8 mx-auto px-6 py-3">
           <ProductFilter
